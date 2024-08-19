@@ -4,7 +4,16 @@ on:
   push:
     branches:
       - adf_publish
-
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - test
+          - production
 jobs:
   deploy:
     runs-on: ubuntu-latest
