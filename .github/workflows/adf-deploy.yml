@@ -82,21 +82,21 @@ jobs:
       #      -predeployment $false `
       #      -deleteDeployment $true
 
-  # pre-approve-production:
-  #   needs: deploy-test
-  #   if: github.event.inputs.environment == 'production' || github.ref == 'refs/heads/main'
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: production-approval
-  #     # The actual reviewers are set in the GitHub environment settings
-  #   steps:
-  #     - name: Pre-approval for Production Deployment
-  #       run: |
-  #         echo "Waiting for manual approval before deploying to production..."
-  #         echo "Approved reviewers can approve this deployment in the GitHub Actions interface."
+  pre-approve-production:
+    needs: deploy-test
+    if: github.event.inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    environment:
+      name: production-approval
+      # The actual reviewers are set in the GitHub environment settings
+    steps:
+      - name: Pre-approval for Production Deployment
+        run: |
+          echo "Waiting for manual approval before deploying to production..."
+          echo "Approved reviewers can approve this deployment in the GitHub Actions interface."
 
   deploy-production:
-    needs: deploy-test
+    needs: pre-approve-production
     runs-on: ubuntu-latest
     environment:
       name: "production"
@@ -119,15 +119,15 @@ jobs:
           $pscredential = New-Object System.Management.Automation.PSCredential ($clientId, $secureStringPwd)
           Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant $tenantId
 
-      - name: Pre-deployment PowerShell Script
-        shell: pwsh
-        run: |
-          & "./dev-ci-cd-demo-ct-adf/PrePostDeploymentScript.Ver2.ps1" `
-           -armTemplate "./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json" `
-           -ResourceGroupName ${{ secrets.PROD_AZURE_RESOURCE_GROUP }} `
-           -DataFactoryName ${{ secrets.PROD_AZURE_FACTORY_NAME }} `
-           -predeployment $true `
-           -deleteDeployment $false
+      # - name: Pre-deployment PowerShell Script
+      #   shell: pwsh
+      #   run: |
+      #     & "./dev-ci-cd-demo-ct-adf/PrePostDeploymentScript.Ver2.ps1" `
+      #      -armTemplate "./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json" `
+      #      -ResourceGroupName ${{ secrets.PROD_AZURE_RESOURCE_GROUP }} `
+      #      -DataFactoryName ${{ secrets.PROD_AZURE_FACTORY_NAME }} `
+      #      -predeployment $true `
+      #      -deleteDeployment $false
 
       - name: Deploy Azure Data Factory to Production
         uses: Azure/arm-deploy@v1
@@ -136,3 +136,13 @@ jobs:
           resourceGroupName: ${{ secrets.PROD_AZURE_RESOURCE_GROUP }}
           template: ./dev-ci-cd-demo-ct-adf/ARMTemplateForFactory.json
           parameters: ./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json factoryName=${{ secrets.PROD_AZURE_FACTORY_NAME }}
+
+      # - name: Post-deployment PowerShell Script
+      #   shell: pwsh
+      #   run: |
+      #     & "./dev-ci-cd-demo-ct-adf/PrePostDeploymentScript.Ver2.ps1" `
+      #      -armTemplate "./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json" `
+      #      -ResourceGroupName ${{ secrets.PROD_AZURE_RESOURCE_GROUP }} `
+      #      -DataFactoryName ${{ secrets.PROD_AZURE_FACTORY_NAME }} `
+      #      -predeployment $false `
+      #      -deleteDeployment $true
