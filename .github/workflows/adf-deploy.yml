@@ -21,7 +21,10 @@ jobs:
       name: "test"
     steps:
       - uses: actions/checkout@v2
-
+      - name: List files in the repository
+        run: |
+          echo "Repository contents:"
+          ls -R
       - name: Login to Azure
         uses: azure/login@v1
         with:
