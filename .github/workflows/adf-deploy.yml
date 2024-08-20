@@ -46,8 +46,8 @@ jobs:
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
-          $RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "$RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+          ${{ env.RUNNER_WORKSPACE }}/PrePostDeploymentScript.Ver2.ps1 `
+            -armTemplate "${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json" `
             -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
             -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
             -predeployment $true `
@@ -64,8 +64,8 @@ jobs:
       - name: Post-deployment PowerShell Script
         shell: pwsh
         run: |
-          $RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "$RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+          ${{ env.RUNNER_WORKSPACE }}/PrePostDeploymentScript.Ver2.ps1 `
+            -armTemplate "${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json" `
             -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
             -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
             -predeployment $false `
