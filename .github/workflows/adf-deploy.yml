@@ -35,5 +35,5 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          template: ./dev-ci-cd-demo-ct-adf/dev-ci-cd-demo-ct-adf/ARMTemplateForFactory.json
-          parameters: ./dev-ci-cd-demo-ct-adf/dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
+          template: ./dev-ci-cd-demo-ct-adf/ARMTemplateForFactory.json
+          parameters: ./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
