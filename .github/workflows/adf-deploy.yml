@@ -46,8 +46,8 @@ jobs:
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
-          ${{ github.workspace }}/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "${{ github.workspace }}/ARMTemplateParametersForFactory.json" `
+          $RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1 `
+            -armTemplate "$RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
             -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
             -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
             -predeployment $true `
@@ -58,14 +58,14 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          template: ${{ github.workspace }}/ARMTemplateForFactory.json
-          parameters: ${{ github.workspace }}/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
+          template: ${{ env.RUNNER_WORKSPACE }}/ARMTemplateForFactory.json
+          parameters: ${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
 
       - name: Post-deployment PowerShell Script
         shell: pwsh
         run: |
-          ${{ github.workspace }}/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "${{ github.workspace }}/ARMTemplateParametersForFactory.json" `
+          $RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1 `
+            -armTemplate "$RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
             -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
             -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
             -predeployment $false `
