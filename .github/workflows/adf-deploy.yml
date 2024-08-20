@@ -28,9 +28,9 @@ jobs:
 
       - name: Display GitHub Actions Path Variables
         run: |
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "GITHUB_ACTION_PATH: $GITHUB_ACTION_PATH"
           echo "RUNNER_WORKSPACE: $RUNNER_WORKSPACE"
+          echo "GITHUB_ACTION_PATH: $GITHUB_ACTION_PATH"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           echo "RUNNER_TEMP: $RUNNER_TEMP"
           echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
           echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
@@ -46,8 +46,8 @@ jobs:
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
-          & "$env:RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-           -armTemplate "$env:RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "$env:GITHUB_WORKSPACE/ARMTemplateParametersForFactory.json" `
            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
            -predeployment $true `
@@ -58,14 +58,14 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          template: ${{ env.RUNNER_WORKSPACE }}/ARMTemplateForFactory.json
-          parameters: ${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
+          template: ${{ env.GITHUB_WORKSPACE }}/ARMTemplateForFactory.json
+          parameters: ${{ env.GITHUB_WORKSPACE }}/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
 
       - name: Post-deployment PowerShell Script
         shell: pwsh
         run: |
-          & "$env:RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-           -armTemplate "$env:RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "$env:GITHUB_WORKSPACE/ARMTemplateParametersForFactory.json" `
            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
            -predeployment $false `
