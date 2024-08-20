@@ -46,12 +46,12 @@ jobs:
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
-          ${{ env.RUNNER_WORKSPACE }}/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json" `
-            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-            -predeployment $true `
-            -deleteDeployment $false
+          & "$env:RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "$env:RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+           -predeployment $true `
+           -deleteDeployment $false
 
       - name: Deploy Azure Data Factory
         uses: Azure/arm-deploy@v1
@@ -64,9 +64,9 @@ jobs:
       - name: Post-deployment PowerShell Script
         shell: pwsh
         run: |
-          ${{ env.RUNNER_WORKSPACE }}/PrePostDeploymentScript.Ver2.ps1 `
-            -armTemplate "${{ env.RUNNER_WORKSPACE }}/ARMTemplateParametersForFactory.json" `
-            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-            -predeployment $false `
-            -deleteDeployment $true
+          & "$env:RUNNER_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "$env:RUNNER_WORKSPACE/ARMTemplateParametersForFactory.json" `
+           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+           -predeployment $false `
+           -deleteDeployment $true
