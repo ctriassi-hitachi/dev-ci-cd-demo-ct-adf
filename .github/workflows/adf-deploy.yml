@@ -43,15 +43,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: Pre-deployment PowerShell Script
-      #   shell: pwsh
-      #   run: |
-      #     & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-      #      -armTemplate "$env:GITHUB_WORKSPACE/ARMTemplateParametersForFactory.json" `
-      #      -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-      #      -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-      #      -predeployment $true `
-      #      -deleteDeployment $false
+      - name: Pre-deployment PowerShell Script
+        shell: pwsh
+        run: |
+          & "./dev-ci-cd-demo-ct-adf/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json" `
+           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+           -predeployment $true `
+           -deleteDeployment $false
 
       - name: Deploy Azure Data Factory
         uses: Azure/arm-deploy@v1
@@ -61,12 +61,12 @@ jobs:
           template: ./dev-ci-cd-demo-ct-adf/ARMTemplateForFactory.json
           parameters: ./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
 
-      # - name: Post-deployment PowerShell Script
-      #   shell: pwsh
-      #   run: |
-      #     & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-      #      -armTemplate "$env:GITHUB_WORKSPACE/ARMTemplateParametersForFactory.json" `
-      #      -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-      #      -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-      #      -predeployment $false `
-      #      -deleteDeployment $true
+      - name: Post-deployment PowerShell Script
+        shell: pwsh
+        run: |
+          & "./dev-ci-cd-demo-ct-adf/PrePostDeploymentScript.Ver2.ps1" `
+           -armTemplate "./dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json" `
+           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+           -predeployment $false `
+           -deleteDeployment $true
