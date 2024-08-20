@@ -1,0 +1,39 @@
+name: Deploy ADF to Test
+
+on:
+  push:
+    branches:
+      - adf_publish
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - test
+          - production
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: "test"
+    steps:
+      - uses: actions/checkout@v2
+      - name: List files in the repository
+        run: |
+          echo "Repository contents:"
+          ls -R
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Azure Data Factory
+        uses: Azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          template: ./dev-ci-cd-demo-ct-adf/dev-ci-cd-demo-ct-adf/ARMTemplateForFactory.json
+          parameters: ./dev-ci-cd-demo-ct-adf/dev-ci-cd-demo-ct-adf/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
