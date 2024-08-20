@@ -43,6 +43,12 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Install Azure PowerShell Module
+        shell: pwsh
+        run: |
+          Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+          Import-Module Az
+
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
