@@ -18,6 +18,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: List files in the repository
+        run: |
+          echo "Repository contents:"
+          ls -R
+
+      - name: Display GitHub Actions Path Variables
+        run: |
+          echo "RUNNER_WORKSPACE: $RUNNER_WORKSPACE"
+          echo "GITHUB_ACTION_PATH: $GITHUB_ACTION_PATH"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "RUNNER_TEMP: $RUNNER_TEMP"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+          echo "GITHUB_PATH: $GITHUB_PATH"
+          echo "HOME: $HOME"
+        shell: bash
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
