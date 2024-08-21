@@ -56,4 +56,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ArmTemplates
-          path: .github/workflows/build/ArmTemplate
+          path: ArmTemplate
+
+      - name: List files in the repository
+        run: |
+          echo "Repository contents:"
+          ls -R
