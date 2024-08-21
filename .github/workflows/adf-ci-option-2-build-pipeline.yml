@@ -26,7 +26,7 @@ jobs:
 
       - name: Install npm packages
         run: |
-          cd ./
+          cd ./build
           npm install
 
       - name: Validate Data Factory Resources
