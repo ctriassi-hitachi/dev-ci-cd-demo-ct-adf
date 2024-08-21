@@ -80,15 +80,15 @@ jobs:
           $pscredential = New-Object System.Management.Automation.PSCredential ($clientId, $secureStringPwd)
           Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant $tenantId
 
-      - name: Pre-deployment PowerShell Script
-        shell: pwsh
-        run: |
-          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-           -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
-           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-           -predeployment $true `
-           -deleteDeployment $false
+      # - name: Pre-deployment PowerShell Script
+      #   shell: pwsh
+      #   run: |
+      #     & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+      #      -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
+      #      -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+      #      -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+      #      -predeployment $true `
+      #      -deleteDeployment $false
 
       - name: Deploy Azure Data Factory
         uses: Azure/arm-deploy@v1
@@ -98,12 +98,12 @@ jobs:
           template: ArmTemplate/ARMTemplateForFactory.json
           parameters: ArmTemplate/ARMTemplateParametersForFactory.json factoryName=${{ secrets.AZURE_FACTORY_NAME }}
 
-      - name: Post-deployment PowerShell Script
-        shell: pwsh
-        run: |
-          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
-           -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
-           -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
-           -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
-           -predeployment $false `
-           -deleteDeployment $true
+      # - name: Post-deployment PowerShell Script
+      #   shell: pwsh
+      #   run: |
+      #     & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+      #      -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
+      #      -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
+      #      -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
+      #      -predeployment $false `
+      #      -deleteDeployment $true
