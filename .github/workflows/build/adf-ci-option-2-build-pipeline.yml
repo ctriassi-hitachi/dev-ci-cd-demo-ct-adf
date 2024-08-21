@@ -5,6 +5,8 @@
 #           Generates the ARM template and publishes for consumption via Release pipeline
 # Build Pipeline Name: ADF CI Option 2 Build Pipeline
 
+name: Build pipeline for the development Azure Data Factory
+
 trigger:
   - main
 
