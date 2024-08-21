@@ -64,6 +64,22 @@ jobs:
           echo "Repository contents:"
           ls -R
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Install Azure PowerShell Module
+        shell: pwsh
+        run: |
+          Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+          $clientId = "${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}"
+          $clientSecret = "${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}"
+          $tenantId = "${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}"
+          $secureStringPwd = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+          $pscredential = New-Object System.Management.Automation.PSCredential ($clientId, $secureStringPwd)
+          Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant $tenantId
+
       - name: Deploy Azure Data Factory
         uses: Azure/arm-deploy@v1
         with:
