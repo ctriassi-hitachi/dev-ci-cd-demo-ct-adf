@@ -1,0 +1,46 @@
+name: ADF CI Option 2 Build Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SUBSCRIPTION_ID: "c0dd70cc-c4a2-4791-85d8-b30290f5af65"
+  RESOURCE_GROUP: "dev-ci-cd-demo-rg"
+  DATA_FACTORY: "dev-ci-cd-demo-ct-adf"
+  PACKAGE_FOLDER: "build"
+  ADF_ROOT_FOLDER: ""
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+
+      - name: Install npm packages
+        run: |
+          cd ./${{ env.PACKAGE_FOLDER }}
+          npm install
+
+      - name: Validate Data Factory Resources
+        run: |
+          cd ./${{ env.PACKAGE_FOLDER }}
+          npm run build validate ./${{ env.ADF_ROOT_FOLDER }} /subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP }}/providers/Microsoft.DataFactory/factories/${{ env.DATA_FACTORY }}
+
+      - name: Generate ARM template
+        run: |
+          cd ./${{ env.PACKAGE_FOLDER }}
+          npm run build export ./${{ env.ADF_ROOT_FOLDER }} /subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP }}/providers/Microsoft.DataFactory/factories/${{ env.DATA_FACTORY }} "ArmTemplate"
+
+      - name: Upload ARM template as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ArmTemplates
+          path: ./${{ env.PACKAGE_FOLDER }}/ArmTemplate
