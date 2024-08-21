@@ -83,7 +83,7 @@ jobs:
       - name: Pre-deployment PowerShell Script
         shell: pwsh
         run: |
-          & "$GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
            -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
@@ -101,7 +101,7 @@ jobs:
       - name: Post-deployment PowerShell Script
         shell: pwsh
         run: |
-          & "$GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
+          & "$env:GITHUB_WORKSPACE/PrePostDeploymentScript.Ver2.ps1" `
            -armTemplate "ArmTemplate/ARMTemplateParametersForFactory.json" `
            -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} `
            -DataFactoryName ${{ secrets.AZURE_FACTORY_NAME }} `
