@@ -1,0 +1,10 @@
+{
+	"name": "ls_weather_dl",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://devcicddemoctdl.dfs.core.windows.net/"
+		}
+	}
+}
