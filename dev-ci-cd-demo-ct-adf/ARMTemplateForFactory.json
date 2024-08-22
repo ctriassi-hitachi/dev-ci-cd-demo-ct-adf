@@ -23,12 +23,30 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Wait1",
-						"type": "Wait",
+						"name": "PostEvent",
+						"type": "WebActivity",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"waitTimeInSeconds": 1
+							"method": "POST",
+							"headers": {},
+							"url": "https://dev-ci-cd-demo-ct-eh.servicebus.windows.net/dev-ci-cd-eventhubs/messages",
+							"body": {
+								"Id": 2,
+								"Name": "test-name-2",
+								"Value": "test-value-2"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://dev-ci-cd-demo-ct-eh.servicebus.windows.net"
+							}
 						}
 					}
 				],
@@ -69,7 +87,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Wait1",
+						"name": "Wait2",
 						"type": "Wait",
 						"dependsOn": [],
 						"userProperties": [],
