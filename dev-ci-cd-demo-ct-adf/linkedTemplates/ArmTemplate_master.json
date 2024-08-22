@@ -11,6 +11,22 @@
 			"type": "string",
 			"defaultValue": "https://devcicddemoctdl.dfs.core.windows.net/"
 		},
+		"WeatherAPILinkedService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.openweathermap.org/data/2.5/"
+		},
+		"ls_weather_dl_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://devcicddemoctdl.dfs.core.windows.net/"
+		},
+		"ls_azure_key_vault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://dev-ci-cd-demo-ct-kv.vault.azure.net/"
+		},
+		"ls_cicddemodl_access_key_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://devcicddemoctdl.dfs.core.windows.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -40,6 +56,18 @@
 					},
 					"ls_devcicdctdemo_managed_identity_properties_typeProperties_url": {
 						"value": "[parameters('ls_devcicdctdemo_managed_identity_properties_typeProperties_url')]"
+					},
+					"WeatherAPILinkedService_properties_typeProperties_url": {
+						"value": "[parameters('WeatherAPILinkedService_properties_typeProperties_url')]"
+					},
+					"ls_weather_dl_properties_typeProperties_url": {
+						"value": "[parameters('ls_weather_dl_properties_typeProperties_url')]"
+					},
+					"ls_azure_key_vault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_azure_key_vault_properties_typeProperties_baseUrl')]"
+					},
+					"ls_cicddemodl_access_key_properties_typeProperties_url": {
+						"value": "[parameters('ls_cicddemodl_access_key_properties_typeProperties_url')]"
 					}
 				}
 			},
