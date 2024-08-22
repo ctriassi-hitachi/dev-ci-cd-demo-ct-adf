@@ -4,6 +4,9 @@
 	"parameters": {
 		"factoryName": {
 			"value": "dev-ci-cd-demo-ct-adf"
+		},
+		"ls_devcicdctdemo_managed_identity_properties_typeProperties_url": {
+			"value": "https://devcicddemoctdl.dfs.core.windows.net/"
 		}
 	}
 }

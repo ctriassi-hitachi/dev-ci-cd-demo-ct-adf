@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "dev-ci-cd-demo-ct-adf"
 		},
+		"ls_devcicdctdemo_managed_identity_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://devcicddemoctdl.dfs.core.windows.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -33,6 +37,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_devcicdctdemo_managed_identity_properties_typeProperties_url": {
+						"value": "[parameters('ls_devcicdctdemo_managed_identity_properties_typeProperties_url')]"
 					}
 				}
 			},
