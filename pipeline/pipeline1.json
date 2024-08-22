@@ -5,7 +5,14 @@
 			{
 				"name": "PostEvent",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Weather",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -18,14 +25,30 @@
 					"method": "POST",
 					"url": "https://dev-ci-cd-demo-ct-eh.servicebus.windows.net/dev-ci-cd-eventhubs/messages",
 					"body": {
-						"Id": 2,
-						"Name": "test-name-2",
-						"Value": "test-value-2"
+						"value": "@activity('Weather').output",
+						"type": "Expression"
 					},
 					"authentication": {
 						"type": "MSI",
 						"resource": "https://dev-ci-cd-demo-ct-eh.servicebus.windows.net"
 					}
+				}
+			},
+			{
+				"name": "Weather",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://api.openweathermap.org/data/2.5/weather?id=524901&appid=b2e454305630dc9067e9d0251fc58a48&units=metric"
 				}
 			}
 		],

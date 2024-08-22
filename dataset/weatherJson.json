@@ -1,0 +1,26 @@
+{
+	"name": "weatherJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WeatherAPILinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"city": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@concat('weather?id=524901&appid=b2e454305630dc9067e9d0251fc58a48&units=metric')",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	}
+}

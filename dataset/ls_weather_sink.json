@@ -1,0 +1,18 @@
+{
+	"name": "ls_weather_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_weather_dl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "sink"
+			}
+		},
+		"schema": {}
+	}
+}
